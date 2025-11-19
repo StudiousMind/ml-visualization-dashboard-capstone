@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import os
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 
 # ---------- Helper function to load data ----------
 @st.cache_data
@@ -45,10 +48,34 @@ def main():
     st.header("3. Missing Values Check")
     missing_counts = df.isnull().sum()
     st.write(missing_counts)
+###################################################################
+    # Placeholder sections for later (DONE)
+    st.header("4. Numeric Distributions")
 
-    # Placeholder sections for later (we'll fill them in next steps)
-    st.header("4. Numeric Distributions (Coming Next)")
-    st.info("Here we will add histograms and boxplots for numeric columns.")
+numeric_cols = ["tenure", "MonthlyCharges", "TotalCharges"]
+selected_num_col = st.selectbox(
+    "Select a numeric column to explore:",
+    numeric_cols,
+    index=1
+)
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("Histogram")
+    fig, ax = plt.subplots()
+    ax.hist(df[selected_num_col], bins=30)
+    ax.set_xlabel(selected_num_col)
+    ax.set_ylabel("Count")
+    st.pyplot(fig)
+
+with col2:
+    st.subheader("Boxplot")
+    fig, ax = plt.subplots()
+    ax.boxplot(df[selected_num_col].dropna(), vert=True)
+    ax.set_xlabel(selected_num_col)
+    st.pyplot(fig)
+#########################################################
 
     st.header("5. Categorical Distributions (Coming Next)")
     st.info("Here we will add bar charts for categorical columns.")
