@@ -157,6 +157,28 @@ def main():
     numeric_cols = ["tenure", "MonthlyCharges", "TotalCharges"]
     scaler = StandardScaler()
     df_prep[numeric_cols] = scaler.fit_transform(df_prep[numeric_cols])
+
+    #Inserting the before and after comparisoin
+
+    # --- Before vs After Preprocessing ---
+    st.subheader("Before vs After Preprocessing")
+    
+    tab1, tab2 = st.tabs(["Before (Raw Data)", "After (Cleaned Data)"])
+    
+    with tab1:
+        st.write("**Raw dataset (original features):**")
+        st.write(f"Shape: {df.shape[0]} rows × {df.shape[1]} columns")
+        st.dataframe(df.head())
+    
+    with tab2:
+        st.write("**Cleaned, encoded, and scaled dataset:**")
+        st.write(f"Shape: {df_prep.shape[0]} rows × {df_prep.shape[1]} columns")
+        st.dataframe(df_prep.head())
+
+    # End of before/after block
+
+
+
     
     # --- Show cleaned dataset preview ---
     st.subheader("Cleaned Dataset Preview")
