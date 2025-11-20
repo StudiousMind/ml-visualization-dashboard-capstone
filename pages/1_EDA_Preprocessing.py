@@ -51,7 +51,7 @@ def main():
 
     # --- Section 2: Dataset info ---
     st.header("2. Column Types & Basic Info")
-    t.write(
+    st.write(
     """
     This shows the type of each column — numbers vs categories. 
     It helps us decide what needs encoding, what needs scaling, 
