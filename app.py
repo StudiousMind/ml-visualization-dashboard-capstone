@@ -34,13 +34,13 @@ def main():
         st.markdown("### 👨‍💻 Team")
         st.markdown(
             """
-            - **Kai“Khaled” Balharith [1250916] ** – EDA & Preprocessing  
+            - **Kai Balharith [1250916]** – EDA & Preprocessing  
             - **Brian [Student ID]** – Modeling & Evaluation  
             - **Rabil [Student ID]** – Interpretability & Explainability  
             """
         )
 
-        st.markdown("---")
+
 
 
     with col2:
