@@ -34,20 +34,14 @@ def main():
         st.markdown("### 👨‍💻 Team")
         st.markdown(
             """
-            - **Khaled “Kai” Balharith** – EDA & Preprocessing  
+            - **Kai“Khaled” Balharith [1250916] ** – EDA & Preprocessing  
             - **Brian [Student ID]** – Modeling & Evaluation  
             - **Rabil [Student ID]** – Interpretability & Explainability  
             """
         )
 
-        st.markdown("### 🧭 How to use this app")
-        st.markdown(
-            """
-            1. Go to **EDA & Preprocessing** to explore and clean the Telco churn dataset.  
-            2. Go to **Modeling & Evaluation** to train models and check performance.  
-            3. Go to **Interpretability** to see which features drive churn predictions.  
-            """
-        )
+        st.markdown("---")
+
 
     with col2:
         logo_path = load_logo()
