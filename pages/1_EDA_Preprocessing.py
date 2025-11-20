@@ -79,7 +79,7 @@ def main():
 
 ###################################################### Categorical Distribution 
     
-       st.header("5. Categorical Distributions")
+    st.header("5. Categorical Distributions")
     
     # Treat these as categorical (except ID)
     categorical_cols = [
