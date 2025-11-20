@@ -7,7 +7,7 @@ import joblib
 import shap
 import matplotlib.pyplot as plt
 
-st.set_option("deprecation.showPyplotGlobalUse", False)
+#st.set_option("deprecation.showPyplotGlobalUse", False)
 
 @st.cache_data
 def load_clean_data():
