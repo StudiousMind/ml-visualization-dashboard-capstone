@@ -25,32 +25,67 @@ def load_data():
 def main():
     st.title("EDA & Preprocessing – Telco Customer Churn")
     st.write(
-        """
-        This page lets you explore the Telco Customer Churn dataset and shows 
-        the preprocessing steps that prepare it for modeling.
-        """
-    )
+    """
+    This page is all about understanding the Telco churn dataset and getting it ready
+    for machine learning. We explore the data, clean it up, fix any issues, and 
+    transform everything into a format that the model can actually use.
+    """
+)
+
 
     # Load data
     df = load_data()
 
     # --- Section 1: Raw data preview ---
     st.header("1. Raw Data Preview")
+    st.write(
+    """
+    Here’s the dataset we’re working with. It’s basically a list of Telco customers, 
+    their services, how long they’ve been with the company, how much they pay, 
+    and whether they cancelled. This gives us a quick feel for what we’re dealing 
+    with before doing anything fancy.
+    """
+)
     st.write(f"Dataset shape: **{df.shape[0]} rows × {df.shape[1]} columns**")
     st.dataframe(df.head())
 
     # --- Section 2: Dataset info ---
     st.header("2. Column Types & Basic Info")
+    t.write(
+    """
+    This shows the type of each column — numbers vs categories. 
+    It helps us decide what needs encoding, what needs scaling, 
+    and what should probably be dropped before modeling.
+    """
+)
     st.write("**Column data types:**")
     st.write(df.dtypes)
 
     # --- Section 3: Missing values ---
     st.header("3. Missing Values Check")
+    st.write(
+    """
+    Just making sure the dataset isn’t hiding anything weird. 
+    The only issue was TotalCharges having blank values for customers 
+    with zero tenure — which totally makes sense. 
+    We cleaned that up during preprocessing.
+    """
+)
     missing_counts = df.isnull().sum()
     st.write(missing_counts)
 ###################################################################
+
+    
     # Placeholder sections for later (DONE)
     st.header("4. Numeric Distributions")
+    st.write(
+    """
+    These charts show how the numeric features are spread out — things like tenure 
+    and monthly charges. This helps us spot skewed distributions or customers who 
+    behave differently from the rest.
+    """
+)
+
 
     numeric_cols = ["tenure", "MonthlyCharges", "TotalCharges"]
     selected_num_col = st.selectbox(
@@ -80,6 +115,14 @@ def main():
 ###################################################### Categorical Distribution 
     
     st.header("5. Categorical Distributions")
+    st.write(
+    """
+    Here we look at the categories — contract type, payment method, internet service, 
+    and so on. This tells us how many people fall into each group and gives us a feel 
+    for the overall customer mix.
+    """
+)
+
     
     # Treat these as categorical (except ID)
     categorical_cols = [
@@ -113,6 +156,14 @@ def main():
     ############################################################## Heatmap
     
     st.header("6. Correlation Heatmap (Numeric Features)")
+    st.write(
+    """
+    This heatmap shows which numeric features move together. For example, TotalCharges 
+    is closely tied to tenure and MonthlyCharges — which makes sense, since it’s basically 
+    the total money a customer has paid over time.
+    """
+)
+
 
     numeric_cols = ["tenure", "MonthlyCharges", "TotalCharges"]
     corr_matrix = df[numeric_cols].corr()
@@ -128,7 +179,15 @@ def main():
 
 ##################################################### Preprocessing 
     st.header("7. Preprocessing Pipeline & Cleaned Dataset")
-    
+    st.write(
+    """
+    Here’s where the real cleaning happens. We fix the TotalCharges issue, 
+    convert categorical columns into numbers, scale the numeric features, 
+    and basically get the dataset into a format that a machine learning model 
+    can actually understand.
+    """
+)
+
     # --- Drop ID column ---
     df_prep = df.drop(["customerID"], axis=1)
     
@@ -162,7 +221,15 @@ def main():
 
     # --- Before vs After Preprocessing ---
     st.subheader("Before vs After Preprocessing")
-    
+    st.write(
+    """
+    This lets us compare the raw data with the final processed version. 
+    The raw data is human-friendly but messy for ML. 
+    The cleaned version is all numbers, scaled values, and encoded categories — 
+    this is what we actually feed to the model.
+    """
+)
+
     tab1, tab2 = st.tabs(["Before (Raw Data)", "After (Cleaned Data)"])
     
     with tab1:
@@ -185,6 +252,13 @@ def main():
     st.dataframe(df_prep.head())
     
     # --- Download cleaned dataset ---
+    st.write(
+    """
+    If anyone in the group wants to work offline or rerun the model, 
+    this is the cleaned dataset ready to go. You can download it here 
+    or just load it directly from the repo.
+    """
+)
     csv = df_prep.to_csv(index=False).encode('utf-8')
     st.download_button(
         label="Download Cleaned Dataset (CSV)",
