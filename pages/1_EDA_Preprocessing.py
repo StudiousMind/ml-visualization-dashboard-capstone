@@ -77,9 +77,39 @@ def main():
         st.pyplot(fig)
 #########################################################
 
-    st.header("5. Categorical Distributions (Coming Next)")
-    st.info("Here we will add bar charts for categorical columns.")
+###################################################### Categorical Distribution 
+    
+       st.header("5. Categorical Distributions")
+    
+    # Treat these as categorical (except ID)
+    categorical_cols = [
+        "gender", "SeniorCitizen", "Partner", "Dependents", "PhoneService",
+        "MultipleLines", "InternetService", "OnlineSecurity", "OnlineBackup",
+        "DeviceProtection", "TechSupport", "StreamingTV", "StreamingMovies",
+        "Contract", "PaperlessBilling", "PaymentMethod", "Churn"
+    ]
+    
+    selected_cat_col = st.selectbox(
+        "Select a categorical column to explore:",
+        categorical_cols,
+        index=categorical_cols.index("Churn")
+    )
+    
+    cat_counts = df[selected_cat_col].value_counts().sort_values(ascending=False)
+    
+    fig, ax = plt.subplots()
+    sns.barplot(x=cat_counts.index, y=cat_counts.values, ax=ax)
+    ax.set_xlabel(selected_cat_col)
+    ax.set_ylabel("Count")
+    plt.xticks(rotation=45, ha="right")
+    st.pyplot(fig)
+    
+    st.write("Value counts:")
+    st.write(cat_counts)
 
+
+    ###################################################################################
+    
     st.header("6. Correlation & Preprocessing (Coming Next)")
     st.info("Here we will show correlations and the final cleaned dataset export.")
 
