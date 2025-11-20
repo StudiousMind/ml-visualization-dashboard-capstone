@@ -109,9 +109,21 @@ def main():
 
 
     ###################################################################################
+
+    ############################################################## Heatmap
     
-    st.header("6. Correlation & Preprocessing (Coming Next)")
-    st.info("Here we will show correlations and the final cleaned dataset export.")
+    st.header("6. Correlation Heatmap (Numeric Features)")
+
+    numeric_cols = ["tenure", "MonthlyCharges", "TotalCharges"]
+    corr_matrix = df[numeric_cols].corr()
+    
+    st.write("Correlation matrix:")
+    st.dataframe(corr_matrix)
+    
+    fig, ax = plt.subplots()
+    sns.heatmap(corr_matrix, annot=True, fmt=".2f", cmap="coolwarm", ax=ax)
+    st.pyplot(fig)
+
 
 if __name__ == "__main__":
     main()
