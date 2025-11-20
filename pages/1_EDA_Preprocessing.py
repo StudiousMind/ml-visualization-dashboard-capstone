@@ -124,6 +124,58 @@ def main():
     sns.heatmap(corr_matrix, annot=True, fmt=".2f", cmap="coolwarm", ax=ax)
     st.pyplot(fig)
 
+#################################################################################
+
+##################################################### Preprocessing 
+    st.header("7. Preprocessing Pipeline & Cleaned Dataset")
+    
+    # --- Drop ID column ---
+    df_prep = df.drop(["customerID"], axis=1)
+    
+    # --- Binary Encode Yes/No columns ---
+    binary_cols = [
+        "gender", "SeniorCitizen", "Partner", "Dependents", "PhoneService",
+        "PaperlessBilling", "Churn"
+    ]
+    
+    # Encode Yes/No or Male/Female as 1/0
+    for col in binary_cols:
+        df_prep[col] = df_prep[col].map({"Yes": 1, "No": 0, "Male": 1, "Female": 0})
+    
+    # --- One-Hot Encode multi-category columns ---
+    multi_cat_cols = [
+        "MultipleLines", "InternetService", "OnlineSecurity", "OnlineBackup",
+        "DeviceProtection", "TechSupport", "StreamingTV", "StreamingMovies",
+        "Contract", "PaymentMethod"
+    ]
+    
+    df_prep = pd.get_dummies(df_prep, columns=multi_cat_cols, drop_first=True)
+    
+    # --- Scale numeric features ---
+    from sklearn.preprocessing import StandardScaler
+    
+    numeric_cols = ["tenure", "MonthlyCharges", "TotalCharges"]
+    scaler = StandardScaler()
+    df_prep[numeric_cols] = scaler.fit_transform(df_prep[numeric_cols])
+    
+    # --- Show cleaned dataset preview ---
+    st.subheader("Cleaned Dataset Preview")
+    st.dataframe(df_prep.head())
+    
+    # --- Download cleaned dataset ---
+    csv = df_prep.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="Download Cleaned Dataset (CSV)",
+        data=csv,
+        file_name="cleaned_telco.csv",
+        mime="text/csv"
+    )
+    
+    # --- Save it into /data so teammates can use it ---
+    output_path = os.path.join("data", "cleaned_telco.csv")
+    df_prep.to_csv(output_path, index=False)
+    st.success(f"Cleaned dataset saved to: {output_path}")
+
 
 if __name__ == "__main__":
     main()
