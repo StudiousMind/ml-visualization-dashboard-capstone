@@ -94,7 +94,7 @@ def main():
         st.markdown("➡️ Open from the sidebar: **Interpretability**")
 
     st.markdown("---")
-    st.caption("Built with ❤️ by Team Telco – Data Visualization for ML Capstone")
+    st.caption("Built with ❤️ by Group 5 – Data Visualization for ML Capstone")
 
 if __name__ == "__main__":
     main()
