@@ -9,10 +9,10 @@ st.set_page_config(
 )
 
 
-# Load and show logo
-logo_path = load_logo()
-if logo_path:
-    st.image(logo_path, width=180)
+# # Load and show logo
+# logo_path = load_logo()
+# if logo_path:
+#     st.image(logo_path, width=180)
 
 # ---------- Optional: load logo ----------
 def load_logo():
