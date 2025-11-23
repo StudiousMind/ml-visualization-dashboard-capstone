@@ -4,8 +4,13 @@ import os
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import (
     accuracy_score,
+    precision_recall_curve,
+    average_precision_score,
     confusion_matrix,
     classification_report
 )
@@ -55,14 +60,24 @@ def main():
 
     st.write(f"Train shape: {X_train.shape}, Test shape: {X_test.shape}")
 
-    # --- Baseline model: Logistic Regression ---
-    st.subheader("3. Train Baseline Model (Logistic Regression)")
+    # --- Training a Baseline Model ---
+    st.subheader("3. Train Baseline Model")
+
+    model_dict = {
+        "Logistic Regression" : LogisticRegression(max_iter=1000),
+        "Decision Tree" : DecisionTreeClassifier(),
+        "Random Forest" : RandomForestClassifier(),
+        "K-Nearest Neighbors" : KNeighborsClassifier()
+    }
+    selected_model = st.selectbox("Select a model to train:", model_dict.keys(), None)
 
     if st.button("Train model"):
-        model = LogisticRegression(max_iter=1000)
+
+        model = model_dict[selected_model]
         model.fit(X_train, y_train)
 
         y_pred = model.predict(X_test)
+        y_prob = model.predict_proba(X_test)[:, 1]
 
         acc = accuracy_score(y_test, y_pred)
         st.write(f"**Accuracy:** {acc:.3f}")
@@ -78,13 +93,23 @@ def main():
 
         # Classification report
         st.subheader("5. Classification Report")
-        st.text(classification_report(y_test, y_pred))
+        st.code(classification_report(y_test, y_pred))
 
-        st.info(
-            "This is just a baseline model. "
-            "Your teammates can extend this page with more models "
-            "(Random Forest, XGBoost, etc.) and add ROC / PR curves."
-        )
+        st.subheader("6. Precision Recall Curve")
+        baseline_precision = y_test.mean()
+        precision, recall, _ =  precision_recall_curve(y_test, y_prob)
+        ap = average_precision_score(y_test, y_prob)
+
+        fig2, ax2 = plt.subplots()
+        ax2.plot(recall, precision, label=f"Average Precision = {ap:.2f}")
+        ax2.axhline(baseline_precision, linestyle = "--", label=f"Baseline = {baseline_precision:.2f}", color = "orange")
+        ax2.set_xlabel("Recall")
+        ax2.set_ylabel("Precision")
+        ax2.set_title("Precision-Recall Curve")
+        ax2.legend()
+        ax2.grid(True)
+        st.pyplot(fig2)
+
 
 if __name__ == "__main__":
     main()
