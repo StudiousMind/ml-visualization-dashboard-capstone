@@ -17,7 +17,6 @@ from sklearn.metrics import (
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# ---------- Helper: load cleaned data ----------
 @st.cache_data
 def load_clean_data():
     data_path = os.path.join("data", "cleaned_telco.csv")
@@ -60,7 +59,7 @@ def main():
 
     st.write(f"Train shape: {X_train.shape}, Test shape: {X_test.shape}")
 
-    # --- Training a Baseline Model ---
+    # Training a baseline model
     st.subheader("3. Train Baseline Model")
 
     model_dict = {
@@ -69,6 +68,7 @@ def main():
         "Random Forest" : RandomForestClassifier(),
         "K-Nearest Neighbors" : KNeighborsClassifier()
     }
+    
     selected_model = st.selectbox("Select a model to train:", model_dict.keys(), None)
 
     if st.button("Train model"):
@@ -94,7 +94,8 @@ def main():
         # Classification report
         st.subheader("5. Classification Report")
         st.code(classification_report(y_test, y_pred))
-
+        
+        # Precision recall curve
         st.subheader("6. Precision Recall Curve")
         baseline_precision = y_test.mean()
         precision, recall, _ =  precision_recall_curve(y_test, y_prob)
@@ -110,7 +111,25 @@ def main():
         ax2.grid(True)
         st.pyplot(fig2)
 
+        # Feature importance plot
+        
+        st.subheader("7. Feature Importance Plot")
+        feat_names = X.columns
+
+        if selected_model == "Logistic Regression":
+            importance = model.coef_[0]
+        elif selected_model == "Decision Tree" or selected_model == "Random Forest":
+            importance = model.feature_importances_
+
+        feat_importance_df = pd.DataFrame({
+            "Feature" : feat_names,
+            "Importance" : importance
+        }).sort_values(by='Importance', ascending=False)
+
+        fig3, ax3 = plt.subplots(figsize = (12,8))
+        sns.barplot(data=feat_importance_df, x="Importance", y="Feature", ax=ax3, palette="coolwarm")
+        ax3.set_title("Feature Importance")
+        st.pyplot(fig3)
 
 if __name__ == "__main__":
     main()
-
