@@ -11,6 +11,7 @@ from sklearn.metrics import (
 )
 import matplotlib.pyplot as plt
 import seaborn as sns
+import joblib
 
 # ---------- Helper: load cleaned data ----------
 @st.cache_data
@@ -63,6 +64,9 @@ def main():
         model.fit(X_train, y_train)
 
         y_pred = model.predict(X_test)
+
+        filename = os.path.join("models", "trained_model.joblib")
+        joblib.dump(model, filename)
 
         acc = accuracy_score(y_test, y_pred)
         st.write(f"**Accuracy:** {acc:.3f}")
