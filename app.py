@@ -41,7 +41,7 @@ def main():
         st.markdown(
             """
             - **Kai Balharith [1250916]** – EDA & Preprocessing  
-            - **Bryan [1320325]** – Modeling & Evaluation  
+            - **Brian [Student ID]** – Modeling & Evaluation  
             - **Rabil [Student ID]** – Interpretability & Explainability  
             """
         )
