@@ -79,7 +79,6 @@ def main():
     st.write(
         """
         This page focuses on **model interpretability** using **SHAP**
-        (SHapley Additive exPlanations).
 
         - A Logistic Regression model is trained on the cleaned Telco churn data.  
         - SHAP values are computed to understand **which features drive churn predictions**.  
