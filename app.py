@@ -42,7 +42,7 @@ def main():
             """
             - **Kai Balharith [1250916]** – EDA & Preprocessing  
             - **Bryan [1320325]** – Modeling & Evaluation  
-            - **Rabil [Student ID]** – Interpretability & Explainability  
+            - **Rabil [1312933]** – Interpretability & Explainability  
             """
         )
 
