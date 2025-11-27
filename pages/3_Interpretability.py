@@ -45,8 +45,8 @@ def train_model_and_compute_shap():
     y = df[target_col]
 
     # Train a simple Logistic Regression model (same features as cleaned data)
-    # model = LogisticRegression(max_iter=1000)
-    model = joblib.load("models/trained_model.joblib")
+    model = LogisticRegression(max_iter=1000)
+    # model = joblib.load("models/trained_model.joblib")
     model.fit(X, y)
 
     # For SHAP, use the full dataset or a sample if it is very large
